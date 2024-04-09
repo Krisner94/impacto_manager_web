@@ -1,8 +1,11 @@
 package application.impacto_manager_web.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.List;
+
 @Entity
 @Table(name = "professores")
 public class Professor implements Serializable {
@@ -12,6 +15,8 @@ public class Professor implements Serializable {
     private Long id;
     @Column(nullable = false)
     private String nome;
+    @OneToMany(mappedBy = "professor")
+    private List<Turma> turma;
 
     public Professor(String nome) {
         this.nome = nome;
@@ -35,5 +40,13 @@ public class Professor implements Serializable {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public List<Turma> getTurma() {
+        return turma;
+    }
+
+    public void setTurma(List<Turma> turma) {
+        this.turma = turma;
     }
 }

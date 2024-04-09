@@ -3,6 +3,7 @@ package application.impacto_manager_web.model;
 import application.impacto_manager_web.CEP.CEP_Service;
 import application.impacto_manager_web.CEP.Endereco;
 import application.impacto_manager_web.enums.SexoEnum;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -46,6 +47,9 @@ public class Aluno implements Serializable {
     @Column(length = 11)
     private String telefone_responsavel_02;
 
+    @ManyToOne
+    private Turma turma;
+
     public Aluno(String nome, String cpf, SexoEnum sexo, LocalDate data_nascimento, String telefone, String cep, String rua, String bairro, String cidade, String numero_casa, String responsavel_01, String telefone_responsavel_01, String responsavel_02, String telefone_responsavel_02) {
         this.nome = nome;
         this.cpf = cpf;
@@ -61,6 +65,14 @@ public class Aluno implements Serializable {
         this.telefone_responsavel_01 = telefone_responsavel_01;
         this.responsavel_02 = responsavel_02;
         this.telefone_responsavel_02 = telefone_responsavel_02;
+    }
+
+    public Turma getTurma() {
+        return turma;
+    }
+
+    public void setTurma(Turma turma) {
+        this.turma = turma;
     }
 
     public Aluno() {
