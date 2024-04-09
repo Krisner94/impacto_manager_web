@@ -18,13 +18,13 @@ public class AlunoController {
     }
 
     @GetMapping({"", "/"})
-    @Operation(summary = "Buscar tudo", description = "Busca todos os alunos", tags = "Alunos")
+    @Operation(summary = "Buscar alunos", description = "Busca todos os alunos", tags = "Alunos")
     public List<Aluno> findAll() {
         return service.findAll();
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Buscar por id", description = "Busca aluno por id", tags = "Alunos")
+    @Operation(summary = "Buscar alunos por id", description = "Busca aluno por id", tags = "Alunos")
     public Aluno findById(@PathVariable Long id) {
         return service.findById(id);
     }

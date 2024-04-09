@@ -19,9 +19,15 @@ public class TurmaController {
     }
 
     @GetMapping({"","/"})
-    @Operation(summary = "Buscar por id", description = "Buscar turmas por id", tags = "Turma")
+    @Operation(summary = "Buscar turmas", description = "Buscar todas as turmas", tags = "Turma")
     public List<Turma> findAll(){
         return service.findAll();
+    }
+
+    @GetMapping("/{id}")
+    @Operation(summary = "Buscar turmas por id", description = "Buscar turmas por id", tags = "Turma")
+    public Turma findById(@PathVariable Long id){
+        return service.findById(id);
     }
 
     @PostMapping

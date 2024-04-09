@@ -19,13 +19,13 @@ public class ProfessorController {
     }
 
     @GetMapping({"","/"})
-    @Operation(summary = "Buscar tudo", description = "Busca todos os professores", tags = "Professor")
+    @Operation(summary = "Buscar professores", description = "Busca todos os professores", tags = "Professor")
     public List<Professor> findAll(){
         return service.findAll();
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Buscar por id", description = "Busca professores por id", tags = "Professor")
+    @Operation(summary = "Buscar professores por id", description = "Busca professores por id", tags = "Professor")
     public Professor findById(@PathVariable Long id){
         return service.findById(id);
     }
