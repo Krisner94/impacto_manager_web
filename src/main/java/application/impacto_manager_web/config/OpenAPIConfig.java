@@ -12,7 +12,7 @@ public class OpenAPIConfig {
     public OpenAPI customOpenApi() {
         return new OpenAPI().info(
                 new Info()
-                        .title("Restfull API Impacto Manager")
+                        .title("Impacto Manager")
                         .version("v1")
                         .description("Sistema de gerenciamento de escola de esportes")
                         .termsOfService(
