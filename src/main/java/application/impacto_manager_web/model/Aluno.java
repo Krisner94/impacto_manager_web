@@ -1,7 +1,5 @@
 package application.impacto_manager_web.model;
 
-import application.impacto_manager_web.CEP.CEP_Service;
-import application.impacto_manager_web.CEP.Endereco;
 import application.impacto_manager_web.enums.SexoEnum;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -10,6 +8,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "aluno")
@@ -47,8 +47,12 @@ public class Aluno implements Serializable {
     @Column(length = 11)
     private String telefone_responsavel_02;
 
-    @ManyToOne
-    private Turma turma;
+    @ManyToMany(mappedBy = "alunos")
+    @JsonIgnore
+    private List<Turma> turmas = new ArrayList<>();
+
+    public Aluno() {
+    }
 
     public Aluno(String nome, String cpf, SexoEnum sexo, LocalDate data_nascimento, String telefone, String cep, String rua, String bairro, String cidade, String numero_casa, String responsavel_01, String telefone_responsavel_01, String responsavel_02, String telefone_responsavel_02) {
         this.nome = nome;
@@ -67,23 +71,8 @@ public class Aluno implements Serializable {
         this.telefone_responsavel_02 = telefone_responsavel_02;
     }
 
-    public Turma getTurma() {
-        return turma;
-    }
-
-    public void setTurma(Turma turma) {
-        this.turma = turma;
-    }
-
-    public Aluno() {
-    }
-
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getNome() {
@@ -132,7 +121,6 @@ public class Aluno implements Serializable {
 
     public void setCep(String cep) {
         this.cep = cep;
-        buscarEndereco();
     }
 
     public String getRua() {
@@ -199,11 +187,11 @@ public class Aluno implements Serializable {
         this.telefone_responsavel_02 = telefone_responsavel_02;
     }
 
-    private void buscarEndereco() {
-        Endereco endereco = CEP_Service.buscaEndereco(this.cep);
-        this.rua = endereco.getLogradouro();
-        this.bairro = endereco.getBairro();
-        this.cidade = endereco.getLocalidade();
+    public List<Turma> getTurmas() {
+        return turmas;
     }
 
+    public void setTurmas(List<Turma> turmas) {
+        this.turmas = turmas;
+    }
 }

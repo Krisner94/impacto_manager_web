@@ -1,5 +1,6 @@
 package application.impacto_manager_web.service;
 
+import application.impacto_manager_web.model.Aluno;
 import application.impacto_manager_web.model.Turma;
 import application.impacto_manager_web.repository.TurmaRepository;
 import org.springframework.stereotype.Service;
@@ -24,7 +25,7 @@ public class TurmaService {
     }
 
     public Turma save(Turma turma){
-        //TODO
+        //TODO - Retirar da geração automática de horário
         turma.setHorario(Instant.now());
         return repository.save(turma);
     }
@@ -35,8 +36,7 @@ public class TurmaService {
             t.setDia01(turma.getDia01());
             t.setDia02(turma.getDia02());
             t.setHorario(turma.getHorario());
-            t.setProfessor(turma.getProfessor());
-            t.setAluno(turma.getAluno());
+            t.setAlunos(turma.getAlunos());
             return repository.save(t);
         }).orElseThrow();
     }

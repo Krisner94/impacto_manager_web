@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "professores")
@@ -15,23 +17,20 @@ public class Professor implements Serializable {
     private Long id;
     @Column(nullable = false)
     private String nome;
-    @OneToMany(mappedBy = "professor")
-    private List<Turma> turma;
+
+    @ManyToMany(mappedBy = "professores")
+    @JsonIgnore
+    private List<Turma> turmas = new ArrayList<>();
+
+    public Professor() {
+    }
 
     public Professor(String nome) {
         this.nome = nome;
     }
 
-    public Professor() {
-
-    }
-
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getNome() {
@@ -42,11 +41,11 @@ public class Professor implements Serializable {
         this.nome = nome;
     }
 
-    public List<Turma> getTurma() {
-        return turma;
+    public List<Turma> getTurmas() {
+        return turmas;
     }
 
-    public void setTurma(List<Turma> turma) {
-        this.turma = turma;
+    public void setTurmas(List<Turma> turmas) {
+        this.turmas = turmas;
     }
 }

@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -19,22 +20,32 @@ public class Turma implements Serializable {
     private DiaDaSemanaEnum dia01, dia02;
     private Instant horario;
 
-    @ManyToOne
-    private Professor professor;
-    @OneToMany(mappedBy = "turma")
-    @JsonIgnore
-    private List<Aluno> aluno;
+    @ManyToMany
+    @JoinTable(
+            name = "TurmasAlunos",
+            //uniqueConstraints = @UniqueConstraint(columnNames = {"codigo_turma", "id_alunos"}),
+            joinColumns = @JoinColumn(name = "turma_id"),
+            inverseJoinColumns = @JoinColumn(name = "alunos_id")
+    )
+    private List<Aluno> alunos = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "TurmasProfessores",
+            //uniqueConstraints = @UniqueConstraint(columnNames = {"codigo_turma", "id_professor"}),
+            joinColumns = @JoinColumn(name = "turma_id"),
+            inverseJoinColumns = @JoinColumn(name = "professor_id")
+    )
+    private List<Professor> professores = new ArrayList<>();
 
     public Turma() {
     }
 
-    public Turma(String nome, DiaDaSemanaEnum dia01, DiaDaSemanaEnum dia02, Instant horario, Professor professor, List<Aluno> aluno) {
+    public Turma(String nome, DiaDaSemanaEnum dia01, DiaDaSemanaEnum dia02, Instant horario) {
         this.nome = nome;
         this.dia01 = dia01;
         this.dia02 = dia02;
         this.horario = horario;
-        this.professor = professor;
-        this.aluno = aluno;
     }
 
     public Long getId() {
@@ -73,19 +84,19 @@ public class Turma implements Serializable {
         this.horario = horario;
     }
 
-    public Professor getProfessor() {
-        return professor;
+    public List<Aluno> getAlunos() {
+        return alunos;
     }
 
-    public void setProfessor(Professor professor) {
-        this.professor = professor;
+    public void setAlunos(List<Aluno> alunos) {
+        this.alunos = alunos;
     }
 
-    public List<Aluno> getAluno() {
-        return aluno;
+    public List<Professor> getProfessores() {
+        return professores;
     }
 
-    public void setAluno(List<Aluno> aluno) {
-        this.aluno = aluno;
+    public void setProfessores(List<Professor> professores) {
+        this.professores = professores;
     }
 }
