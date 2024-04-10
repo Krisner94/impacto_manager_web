@@ -1,5 +1,7 @@
 package application.impacto_manager_web.model;
 
+import application.impacto_manager_web.CEP.CEP_Service;
+import application.impacto_manager_web.CEP.Endereco;
 import application.impacto_manager_web.enums.SexoEnum;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -17,7 +19,7 @@ public class Aluno implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     @Column(nullable = false)
     private String nome;
@@ -121,6 +123,7 @@ public class Aluno implements Serializable {
 
     public void setCep(String cep) {
         this.cep = cep;
+        buscaCep(cep);
     }
 
     public String getRua() {
@@ -193,5 +196,12 @@ public class Aluno implements Serializable {
 
     public void setTurmas(List<Turma> turmas) {
         this.turmas = turmas;
+    }
+
+    private void buscaCep(String cep){
+        Endereco endereco = CEP_Service.buscaEndereco(cep);
+        setRua(endereco.getLogradouro());
+        setBairro(endereco.getBairro());
+        setCidade(endereco.getLocalidade());
     }
 }
