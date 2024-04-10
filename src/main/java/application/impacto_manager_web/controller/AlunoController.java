@@ -38,7 +38,8 @@ public class AlunoController {
 
     @PutMapping("/{id}")
     @Operation(summary = "Editar dados", description = "Editar dados de alunos", tags = "Alunos")
-    public Aluno update(@PathVariable Long id, @RequestBody Aluno aluno) {
+    public Aluno update(@RequestBody Aluno aluno) {
+        Long id = aluno.getId();
         return service.update(id, aluno);
     }
 
