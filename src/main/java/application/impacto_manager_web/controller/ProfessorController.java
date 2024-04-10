@@ -39,7 +39,8 @@ public class ProfessorController {
 
     @PutMapping("/{id}")
     @Operation(summary = "Editar dados", description = "Editar dados de professores", tags = "Professor")
-    public Professor update(@PathVariable Long id, @RequestBody Professor professor){
+    public Professor update(@RequestBody Professor professor){
+        Long id = professor.getId();
         return service.update(id, professor);
     }
 

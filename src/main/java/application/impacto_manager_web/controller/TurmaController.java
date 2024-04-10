@@ -39,7 +39,8 @@ public class TurmaController {
 
     @PutMapping("/{id}")
     @Operation(summary = "Atualizar turma", description = "Atualizar dados de turma", tags = "Turma")
-    public Turma update(@PathVariable Long id, @RequestBody Turma turma){
+    public Turma update(@RequestBody Turma turma){
+        Long id = turma.getId();
         return service.update(id, turma);
     }
 
