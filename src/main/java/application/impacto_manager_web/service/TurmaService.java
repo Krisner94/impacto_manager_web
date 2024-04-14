@@ -25,8 +25,6 @@ public class TurmaService {
     }
 
     public Turma save(Turma turma){
-        //TODO - Retirar da geração automática de horário
-        turma.setHorario(Instant.now());
         return repository.save(turma);
     }
 

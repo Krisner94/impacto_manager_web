@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,8 +21,8 @@ public class Turma implements Serializable {
     @Column(name = "id", nullable = false)
     private Long id;
     private String nome;
-    private DiaDaSemanaEnum dia01, dia02;
-    private Instant horario;
+    private Integer dia01, dia02;
+    private String horario;
 
     @ManyToMany
     @JoinTable(
@@ -44,11 +45,12 @@ public class Turma implements Serializable {
     public Turma() {
     }
 
-    public Turma(String nome, DiaDaSemanaEnum dia01, DiaDaSemanaEnum dia02, Instant horario) {
+    public Turma(Long id, String nome, String horario, DiaDaSemanaEnum dia01, DiaDaSemanaEnum dia02) {
+        this.id = id;
         this.nome = nome;
-        this.dia01 = dia01;
-        this.dia02 = dia02;
         this.horario = horario;
+        this.dia01 = dia01.getCod();
+        this.dia02 = dia02.getCod();
     }
 
     public Long getId() {
@@ -64,26 +66,26 @@ public class Turma implements Serializable {
     }
 
     public DiaDaSemanaEnum getDia01() {
-        return dia01;
+        return DiaDaSemanaEnum.toEnum(dia01);
     }
 
     public void setDia01(DiaDaSemanaEnum dia01) {
-        this.dia01 = dia01;
+        this.dia01 = dia01.getCod();
     }
 
     public DiaDaSemanaEnum getDia02() {
-        return dia02;
+        return DiaDaSemanaEnum.toEnum(dia02);
     }
 
     public void setDia02(DiaDaSemanaEnum dia02) {
-        this.dia02 = dia02;
+        this.dia02 = dia02.getCod();
     }
 
-    public Instant getHorario() {
+    public String getHorario() {
         return horario;
     }
 
-    public void setHorario(Instant horario) {
+    public void setHorario(String horario) {
         this.horario = horario;
     }
 
