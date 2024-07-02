@@ -41,6 +41,7 @@ public class Aluno implements Serializable {
     private String cidade;
     @Column(nullable = false)
     private String numero_casa;
+    private String complemento;
 
     private String responsavel_01;
     @Column(length = 11)
@@ -56,21 +57,23 @@ public class Aluno implements Serializable {
     public Aluno() {
     }
 
-    public Aluno(String nome, String cpf, SexoEnum sexo, LocalDate data_nascimento, String telefone, String cep, String rua, String bairro, String cidade, String numero_casa, String responsavel_01, String telefone_responsavel_01, String responsavel_02, String telefone_responsavel_02) {
-        this.nome = nome;
-        this.cpf = cpf;
-        this.sexo = sexo;
-        this.data_nascimento = data_nascimento;
-        this.telefone = telefone;
-        this.cep = cep;
-        this.rua = rua;
+    public Aluno(String bairro, String cep, String cidade, String complemento, String cpf, LocalDate data_nascimento, String nome, String numero_casa, String responsavel_01, String responsavel_02, String rua, SexoEnum sexo, String telefone, String telefone_responsavel_01, String telefone_responsavel_02, List<Turma> turmas) {
         this.bairro = bairro;
+        this.cep = cep;
         this.cidade = cidade;
+        this.complemento = complemento;
+        this.cpf = cpf;
+        this.data_nascimento = data_nascimento;
+        this.nome = nome;
         this.numero_casa = numero_casa;
         this.responsavel_01 = responsavel_01;
-        this.telefone_responsavel_01 = telefone_responsavel_01;
         this.responsavel_02 = responsavel_02;
+        this.rua = rua;
+        this.sexo = sexo;
+        this.telefone = telefone;
+        this.telefone_responsavel_01 = telefone_responsavel_01;
         this.telefone_responsavel_02 = telefone_responsavel_02;
+        this.turmas = turmas;
     }
 
     public Long getId() {
@@ -123,7 +126,6 @@ public class Aluno implements Serializable {
 
     public void setCep(String cep) {
         this.cep = cep;
-        buscaCep(cep);
     }
 
     public String getRua() {
@@ -198,10 +200,11 @@ public class Aluno implements Serializable {
         this.turmas = turmas;
     }
 
-    private void buscaCep(String cep){
-        Endereco endereco = CEP_Service.buscaEndereco(cep);
-        setRua(endereco.getLogradouro());
-        setBairro(endereco.getBairro());
-        setCidade(endereco.getLocalidade());
+    public String getComplemento() {
+        return complemento;
+    }
+
+    public void setComplemento(String complemento) {
+        this.complemento = complemento;
     }
 }

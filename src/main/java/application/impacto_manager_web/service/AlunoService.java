@@ -42,6 +42,7 @@ public class AlunoService {
             p.setTelefone_responsavel_01(aluno.getTelefone_responsavel_01());
             p.setResponsavel_02(aluno.getResponsavel_02());
             p.setTelefone_responsavel_02(aluno.getTelefone_responsavel_02());
+            p.setComplemento(aluno.getComplemento());
             return repository.save(p);
         }).orElseThrow();
     }
