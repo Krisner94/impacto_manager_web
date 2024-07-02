@@ -1,16 +1,16 @@
-FROM ubuntu:latest AS build
+FROM ubuntu:20.04 AS build
 
-RUN apt-get update
-RUN apt-get install openjdk-17-jdk -y
-COPY . .
+RUN apt-get update && apt-get install openjdk-17-jdk -y
+COPY pom.xml .
+COPY src /app/src
 
-RUN apt install -y maven
-RUN mvn clean install
+RUN apt-get install -y maven
+RUN mvn clean package
 
 FROM openjdk:17-jdk-slim
 
-EXPOSE 8080
+COPY --from=build /target/*.jar app.jar
 
-COPY --from=build /target/impacto_manager_web-0.0.1-SNAPSHOT.jar app.jar
+EXPOSE 8080
 
 ENTRYPOINT ["java", "-jar", "app.jar"]
