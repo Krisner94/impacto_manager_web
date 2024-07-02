@@ -37,6 +37,7 @@ public class AlunoService {
             p.setRua(aluno.getRua());
             p.setBairro(aluno.getBairro());
             p.setCidade(aluno.getCidade());
+            p.setComplemento(aluno.getComplemento());
             p.setNumero_casa(aluno.getNumero_casa());
             p.setResponsavel_01(aluno.getResponsavel_01());
             p.setTelefone_responsavel_01(aluno.getTelefone_responsavel_01());
