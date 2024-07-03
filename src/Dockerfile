@@ -5,7 +5,7 @@ RUN apt-get install openjdk-17-jdk -y
 
 WORKDIR /app
 
-COPY pom.xml .
+COPY pom.xml /impacto_manager_web/
 COPY src /impacto_manager_web/src
 
 RUN apt-get install -y maven
