@@ -1,20 +1,19 @@
 # Define a imagem base
-FROM eclipse-temurin:21
+FROM ubuntu:latest AS build
+RUN apt-get update
+RUN apt-get install openjdk-17-jdk -y
+COPY . .
 
-# Define o diretório de trabalho no container
-WORKDIR /app
+RUN apt-get install maven -y
+RUN mvn clean install
 
-# Copia o código-fonte para o container
-COPY src/ /impacto_manager_web/src/
+FROM openjdk:17-jdk-slim
 
-# Instala as dependências
-RUN mvn clean package
-
-# Define a variável de ambiente para a porta
 ENV PORT=8080
 
 # Expose a porta
 EXPOSE $PORT
 
-# Define o comando de execução
-CMD ["java", "-jar", "target/my-project-0.0.1-SNAPSHOT.jar"]
+COPY --from=build /target/impacto_manager_web-0.0.1-SNAPSHOT.jar
+
+ENTRYPOINT ["java","-jar","app.jar"]
