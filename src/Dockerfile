@@ -14,6 +14,6 @@ ENV PORT=8080
 # Expose a porta
 EXPOSE $PORT
 
-COPY --from=build /target/impacto_manager_web-0.0.1-SNAPSHOT.jar
+COPY --from=build /target/impacto_manager_web-0.0.1-SNAPSHOT.jar /app/
 
 ENTRYPOINT ["java","-jar","app.jar"]
