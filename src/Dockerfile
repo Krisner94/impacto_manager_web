@@ -1,16 +1,20 @@
-FROM ubuntu:20.04 AS build
+# Define a imagem base
+FROM eclipse-temurin:21
 
-RUN apt-get update && apt-get install openjdk-17-jdk -y
-COPY ../pom.xml .
-COPY src /impacto_manager_web/app/src
+# Define o diretório de trabalho no container
+WORKDIR /app
 
-RUN apt-get install -y maven
+# Copia o código-fonte para o container
+COPY src/ /impacto_manager_web/src/
+
+# Instala as dependências
 RUN mvn clean package
 
-FROM openjdk:17-jdk-slim
+# Define a variável de ambiente para a porta
+ENV PORT=8080
 
-COPY --from=build /target/*.jar app.jar
+# Expose a porta
+EXPOSE $PORT
 
-EXPOSE 8080
-
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Define o comando de execução
+CMD ["java", "-jar", "target/my-project-0.0.1-SNAPSHOT.jar"]
