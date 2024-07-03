@@ -3,8 +3,10 @@ FROM ubuntu:latest AS build
 RUN apt-get update
 RUN apt-get install openjdk-17-jdk -y
 
-COPY src/pom.xml .
-COPY src src
+WORKDIR /app
+
+COPY pom.xml .
+COPY src /app/src
 
 RUN apt-get install -y maven
 RUN mvn clean install
