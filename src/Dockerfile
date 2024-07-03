@@ -1,8 +1,8 @@
 FROM ubuntu:20.04 AS build
 
 RUN apt-get update && apt-get install openjdk-17-jdk -y
-COPY pom.xml .
-COPY src /app/src
+COPY ../pom.xml .
+COPY src /impacto_manager_web/app/src
 
 RUN apt-get install -y maven
 RUN mvn clean package
