@@ -1,6 +1,5 @@
 package application.impacto_manager_web.controller;
 
-import application.impacto_manager_web.model.Aluno;
 import application.impacto_manager_web.model.Professor;
 import application.impacto_manager_web.service.ProfessorService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -46,7 +45,7 @@ public class ProfessorController {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Excluir professor", description = "Excluir professor", tags = "Professor")
-    public ResponseEntity<Void> delete(@PathVariable Long id){
+    public ResponseEntity<Void> delete(@RequestHeader @PathVariable Long id){
         service.delete(id);
         return ResponseEntity.ok().build();
     }

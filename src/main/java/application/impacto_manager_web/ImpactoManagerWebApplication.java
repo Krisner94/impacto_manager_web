@@ -5,26 +5,25 @@ import application.impacto_manager_web.model.Professor;
 import application.impacto_manager_web.model.Turma;
 import application.impacto_manager_web.repository.ProfessorRepository;
 import application.impacto_manager_web.repository.TurmaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
 @SpringBootApplication
 public class ImpactoManagerWebApplication implements CommandLineRunner {
+
+    public ImpactoManagerWebApplication(ProfessorRepository professorRepository, TurmaRepository turmaRepository) {
+        this.professorRepository = professorRepository;
+        this.turmaRepository = turmaRepository;
+    }
 
     public static void main(String[] args) {
         SpringApplication.run(ImpactoManagerWebApplication.class, args);
     }
 
-    @Autowired
-    ProfessorRepository professorRepository;
+    final ProfessorRepository professorRepository;
 
-    @Autowired
-    TurmaRepository turmaRepository;
+    final TurmaRepository turmaRepository;
 
     @Override
     public void run(String... args) throws Exception {
