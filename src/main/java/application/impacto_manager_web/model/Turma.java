@@ -2,22 +2,26 @@ package application.impacto_manager_web.model;
 
 import application.impacto_manager_web.enums.DiaDaSemanaEnum;
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.time.Instant;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "turma")
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Turma implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private Long id;
     private String nome;
@@ -42,27 +46,12 @@ public class Turma implements Serializable {
     )
     private List<Professor> professores = new ArrayList<>();
 
-    public Turma() {
-    }
-
     public Turma(Long id, String nome, String horario, DiaDaSemanaEnum dia01, DiaDaSemanaEnum dia02) {
         this.id = id;
         this.nome = nome;
         this.horario = horario;
         this.dia01 = dia01.getCod();
         this.dia02 = dia02.getCod();
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
     }
 
     public DiaDaSemanaEnum getDia01() {
@@ -81,27 +70,4 @@ public class Turma implements Serializable {
         this.dia02 = dia02.getCod();
     }
 
-    public String getHorario() {
-        return horario;
-    }
-
-    public void setHorario(String horario) {
-        this.horario = horario;
-    }
-
-    public List<Aluno> getAlunos() {
-        return alunos;
-    }
-
-    public void setAlunos(List<Aluno> alunos) {
-        this.alunos = alunos;
-    }
-
-    public List<Professor> getProfessores() {
-        return professores;
-    }
-
-    public void setProfessores(List<Professor> professores) {
-        this.professores = professores;
-    }
 }
