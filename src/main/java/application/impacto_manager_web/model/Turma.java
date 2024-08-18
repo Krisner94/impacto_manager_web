@@ -21,11 +21,12 @@ public class Turma implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
     private String nome;
-    private Integer dia01, dia02;
+    private Integer dia01;
+    private Integer dia02;
     private String horario;
 
     @ManyToMany
