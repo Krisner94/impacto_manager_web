@@ -33,7 +33,7 @@ public class Aluno implements Serializable {
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate data_nascimento;
+    private LocalDate dataNascimento;
     @Column(length = 11)
     private String telefone;
 
@@ -43,18 +43,17 @@ public class Aluno implements Serializable {
     private String bairro;
     private String cidade;
     @Column(nullable = false)
-    private String numero_casa;
+    private String numeroCasa;
     private String complemento;
 
-    private String responsavel_01;
+    private String responsavel01;
     @Column(length = 11)
-    private String telefone_responsavel_01;
-    private String responsavel_02;
+    private String telefoneResponsavel01;
+    private String responsavel02;
     @Column(length = 11)
-    private String telefone_responsavel_02;
+    private String telefoneResponsavel02;
 
     @ManyToMany(mappedBy = "alunos")
     @JsonIgnore
     private List<Turma> turmas;
-
 }
