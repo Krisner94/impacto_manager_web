@@ -25,7 +25,8 @@ public class Turma implements Serializable {
     @Column(name = "id", nullable = false)
     private Long id;
     private String nome;
-    private Integer dia01, dia02;
+    private Integer dia01;
+    private Integer dia02;
     private String horario;
 
     @ManyToMany
