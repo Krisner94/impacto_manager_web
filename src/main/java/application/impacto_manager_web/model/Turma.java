@@ -1,6 +1,6 @@
 package application.impacto_manager_web.model;
 
-import application.impacto_manager_web.enums.DiaDaSemanaEnum;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -25,8 +25,8 @@ public class Turma implements Serializable {
     @Column(name = "id", nullable = false)
     private Long id;
     private String nome;
-    private Integer dia01;
-    private Integer dia02;
+    private String dia01;
+    private String dia02;
     private String horario;
 
     @ManyToMany
@@ -46,29 +46,4 @@ public class Turma implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "professor_id")
     )
     private List<Professor> professores = new ArrayList<>();
-
-    public Turma(Long id, String nome, String horario, DiaDaSemanaEnum dia01, DiaDaSemanaEnum dia02) {
-        this.id = id;
-        this.nome = nome;
-        this.horario = horario;
-        this.dia01 = dia01.getCod();
-        this.dia02 = dia02.getCod();
-    }
-
-    public DiaDaSemanaEnum getDia01() {
-        return DiaDaSemanaEnum.toEnum(dia01);
-    }
-
-    public void setDia01(DiaDaSemanaEnum dia01) {
-        this.dia01 = dia01.getCod();
-    }
-
-    public DiaDaSemanaEnum getDia02() {
-        return DiaDaSemanaEnum.toEnum(dia02);
-    }
-
-    public void setDia02(DiaDaSemanaEnum dia02) {
-        this.dia02 = dia02.getCod();
-    }
-
 }
