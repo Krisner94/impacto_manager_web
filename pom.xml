@@ -10,7 +10,7 @@
     </parent>
     <groupId>application</groupId>
     <artifactId>impacto_manager_web</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1-alpha</version>
     <name>impacto_manager_web</name>
     <description>impacto_manager_web</description>
     <properties>
