@@ -14,7 +14,6 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class GetDBConnection {
     private final AlunoRepository respository;
-    private final TurmaRepository turmaRepository;
 
     @Scheduled(cron = "0 0 12 * * ?")
     private void getDB(){
