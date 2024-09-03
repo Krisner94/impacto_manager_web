@@ -1,207 +1,391 @@
-openapi: 3.0.0
+---
+openapi: 3.0.1
 info:
   title: Impacto Manager
   description: Sistema de gerenciamento de escola de esportes
+  termsOfService: |-
+    class License {
+        name: Apache 2.0
+        url: https://www.apache.org/licenses/LICENSE-2.0
+        identifier: null
+    }
   version: v1
 servers:
-  - url: /api
-tags:
-  - name: Alunos
-    description: Operations about alunos
-  - name: Professores
-    description: Operations about professores
-  - name: Turmas
-    description: Operations about turmas
+  - url: http://localhost:8080
+    description: Generated server url
 paths:
-  /aluno:
+  "/api/turma/{id}":
     get:
       tags:
-        - Alunos
-      summary: Buscar alunos
-      responses:
-        200:
-          description: List of alunos
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Aluno'
-    post:
-      tags:
-        - Alunos
-      summary: Novo Aluno
-      requestBody:
-        description: Aluno to be created
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Aluno'
-      responses:
-        201:
-          description: Created
-  /aluno/{id}:
-    get:
-      tags:
-        - Alunos
-      summary: Buscar aluno por id
+        - Turmas
+      summary: Retorna uma turma específica
+      operationId: findById
       parameters:
-        - in: path
-          name: id
+        - name: id
+          in: path
           required: true
           schema:
             type: integer
+            format: int64
       responses:
-        200:
-          description: Aluno found
+        '200':
+          description: OK
           content:
-            application/json:
+            "*/*":
               schema:
-                $ref: '#/components/schemas/Aluno'
+                "$ref": "#/components/schemas/Turma"
+    put:
+      tags:
+        - Turmas
+      summary: Atualiza os valores de uma turma existente
+      operationId: update
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Turma"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/Turma"
+    delete:
+      tags:
+        - Turmas
+      summary: Exclui uma turma existente
+      operationId: delete
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+  "/api/professor/{id}":
+    get:
+      tags:
+        - Professor
+      summary: Busca um professor específico
+      operationId: findById_1
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/Professor"
+    put:
+      tags:
+        - Professor
+      summary: Atualiza um professor
+      operationId: update_1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Professor"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/Professor"
+    delete:
+      tags:
+        - Professor
+      summary: Excluir professor
+      operationId: delete_1
+      parameters:
+        - name: id
+          in: header
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+  "/api/aluno/{id}":
+    get:
+      tags:
+        - Alunos
+      summary: Buscar alunos por id
+      operationId: findById_2
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/Aluno"
     put:
       tags:
         - Alunos
       summary: Editar dados
+      operationId: update_2
       requestBody:
-        description: Aluno to be updated
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Aluno'
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: integer
+              "$ref": "#/components/schemas/Aluno"
+        required: true
       responses:
-        200:
-          description: Updated
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/Aluno"
     delete:
       tags:
         - Alunos
-      summary: Excluir aluno
+      summary: Exclui aluno
+      operationId: delete_2
       parameters:
-        - in: path
-          name: id
+        - name: id
+          in: path
           required: true
           schema:
             type: integer
+            format: int64
       responses:
-        204:
-          description: Deleted
-  /professor:
+        '200':
+          description: OK
+  "/api/turma":
     get:
       tags:
-        - Professores
-      summary: Buscar professores
+        - Turmas
+      summary: Retorna todas as turmas
+      operationId: findAll_1
       responses:
-        200:
-          description: List of professores
+        '200':
+          description: OK
           content:
-            application/json:
+            "*/*":
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Professor'
+                  "$ref": "#/components/schemas/Turma"
     post:
       tags:
-        - Professores
-      summary: Adicionar professor
-      requestBody:
-        description: Professor to be created
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Professor'
-      responses:
-        201:
-          description: Created
-  /professor/{id}:
-    get:
-      tags:
-        - Professores
-      summary: Buscar professor por id
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: integer
-      responses:
-        200:
-          description: Professor found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Professor'
-    put:
-      tags:
-        - Professores
-      summary: Atualizar professor
-      requestBody:
-        description: Professor to be updated
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Professor'
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: integer
-      responses:
-        200:
-          description: Updated
-    delete:
-      tags:
-        - Professores
-      summary: Excluir professor
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: integer
-      responses:
-        204:
-          description: Deleted
-  /turma:
-    get:
-      tags:
         - Turmas
-      summary: Buscar turmas
+      summary: Cria uma nova turma
+      operationId: create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Turma"
+        required: true
       responses:
-        200:
-          description: List of turmas
+        '200':
+          description: OK
           content:
-            application/json:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/Turma"
+  "/api/professor":
+    get:
+      tags:
+        - Professor
+      summary: Busca todos os professores existentes
+      operationId: findAll_2
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Turma'
+                  "$ref": "#/components/schemas/Professor"
     post:
       tags:
-        - Turmas
-      summary: Criar turma
+        - Professor
+      summary: Adiciona um professor
+      operationId: create_1
       requestBody:
-        description: Turma to be created
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Turma'
+              "$ref": "#/components/schemas/Professor"
+        required: true
       responses:
-        201:
-          description: Created
-  /turma/{id}:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/Professor"
+  "/api/aluno":
+    get:
+      tags:
+        - Alunos
+      summary: Buscar alunos
+      operationId: findAll_5
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Aluno"
+    post:
+      tags:
+        - Alunos
+      summary: Novo Aluno
+      operationId: create_2
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Aluno"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/Aluno"
+  "/api/turma/":
     get:
       tags:
         - Turmas
-      summary: Buscar turma por
-
+      summary: Retorna todas as turmas
+      operationId: findAll
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Turma"
+  "/api/professor/":
+    get:
+      tags:
+        - Professor
+      summary: Busca todos os professores existentes
+      operationId: findAll_3
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Professor"
+  "/api/aluno/":
+    get:
+      tags:
+        - Alunos
+      summary: Buscar alunos
+      operationId: findAll_4
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Aluno"
 components:
   schemas:
-    Turma:
     Aluno:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        nome:
+          type: string
+        cpf:
+          type: string
+        sexo:
+          type: string
+          enum:
+            - MASCULINO
+            - FEMININO
+        dataNascimento:
+          type: string
+          format: date
+        telefone:
+          type: string
+        cep:
+          type: string
+        rua:
+          type: string
+        bairro:
+          type: string
+        cidade:
+          type: string
+        numeroCasa:
+          type: string
+        complemento:
+          type: string
+        responsavel01:
+          type: string
+        telefoneResponsavel01:
+          type: string
+        responsavel02:
+          type: string
+        telefoneResponsavel02:
+          type: string
     Professor:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        nome:
+          type: string
+    Turma:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        nome:
+          type: string
+        dia01:
+          type: string
+        dia02:
+          type: string
+        horario:
+          type: string
+        alunos:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Aluno"
+        professores:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Professor"
