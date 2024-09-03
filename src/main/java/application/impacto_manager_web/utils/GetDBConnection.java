@@ -1,7 +1,6 @@
 package application.impacto_manager_web.utils;
 
 import application.impacto_manager_web.repository.AlunoRepository;
-import application.impacto_manager_web.repository.TurmaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.EnableScheduling;
