@@ -1,0 +1,207 @@
+openapi: 3.0.0
+info:
+  title: Impacto Manager
+  description: Sistema de gerenciamento de escola de esportes
+  version: v1
+servers:
+  - url: /api
+tags:
+  - name: Alunos
+    description: Operations about alunos
+  - name: Professores
+    description: Operations about professores
+  - name: Turmas
+    description: Operations about turmas
+paths:
+  /aluno:
+    get:
+      tags:
+        - Alunos
+      summary: Buscar alunos
+      responses:
+        200:
+          description: List of alunos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Aluno'
+    post:
+      tags:
+        - Alunos
+      summary: Novo Aluno
+      requestBody:
+        description: Aluno to be created
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Aluno'
+      responses:
+        201:
+          description: Created
+  /aluno/{id}:
+    get:
+      tags:
+        - Alunos
+      summary: Buscar aluno por id
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Aluno found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Aluno'
+    put:
+      tags:
+        - Alunos
+      summary: Editar dados
+      requestBody:
+        description: Aluno to be updated
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Aluno'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Updated
+    delete:
+      tags:
+        - Alunos
+      summary: Excluir aluno
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        204:
+          description: Deleted
+  /professor:
+    get:
+      tags:
+        - Professores
+      summary: Buscar professores
+      responses:
+        200:
+          description: List of professores
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Professor'
+    post:
+      tags:
+        - Professores
+      summary: Adicionar professor
+      requestBody:
+        description: Professor to be created
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Professor'
+      responses:
+        201:
+          description: Created
+  /professor/{id}:
+    get:
+      tags:
+        - Professores
+      summary: Buscar professor por id
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Professor found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Professor'
+    put:
+      tags:
+        - Professores
+      summary: Atualizar professor
+      requestBody:
+        description: Professor to be updated
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Professor'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Updated
+    delete:
+      tags:
+        - Professores
+      summary: Excluir professor
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        204:
+          description: Deleted
+  /turma:
+    get:
+      tags:
+        - Turmas
+      summary: Buscar turmas
+      responses:
+        200:
+          description: List of turmas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Turma'
+    post:
+      tags:
+        - Turmas
+      summary: Criar turma
+      requestBody:
+        description: Turma to be created
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Turma'
+      responses:
+        201:
+          description: Created
+  /turma/{id}:
+    get:
+      tags:
+        - Turmas
+      summary: Buscar turma por
+
+components:
+  schemas:
+    Turma:
+    Aluno:
+    Professor:

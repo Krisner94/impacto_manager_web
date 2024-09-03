@@ -1,1 +1,7 @@
-# impacto_manager_web
+# Impacto Manager
+
+Sistema de gerenciamento de escola de esportes
+
+## Documentação
+
+* [OpenAPI](openapi.yaml)
