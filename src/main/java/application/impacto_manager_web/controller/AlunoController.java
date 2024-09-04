@@ -1,9 +1,11 @@
 package application.impacto_manager_web.controller;
 
+import application.impacto_manager_web.AlunoFaker;
 import application.impacto_manager_web.model.Aluno;
 import application.impacto_manager_web.service.AlunoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,9 +16,12 @@ import java.util.List;
 @Tag(name = "Alunos")
 public class AlunoController {
     private final AlunoService service;
+    private final AlunoFaker alunoFaker;
 
-    public AlunoController(AlunoService service) {
+    @Autowired
+    public AlunoController(AlunoService service, AlunoFaker alunoFaker) {
         this.service = service;
+        this.alunoFaker = alunoFaker;
     }
 
     @GetMapping({"", "/"})
@@ -49,6 +54,13 @@ public class AlunoController {
     @Operation(summary = "Exclui aluno")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.delete(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/fake")
+    @Operation(summary = "Adicionar alunos fake")
+    public ResponseEntity<Void> addFakeAlunos(@RequestParam int quantidade) {
+        alunoFaker.insertFakeAlunosIntoDatabase(quantidade);
         return ResponseEntity.ok().build();
     }
 }
