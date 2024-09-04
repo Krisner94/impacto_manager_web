@@ -8,9 +8,13 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.ui.Model;
+import org.springframework.data.domain.Page;
+
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/aluno")
 @Tag(name = "Alunos")
@@ -22,6 +26,18 @@ public class AlunoController {
     public AlunoController(AlunoService service, AlunoFaker alunoFaker) {
         this.service = service;
         this.alunoFaker = alunoFaker;
+    }
+
+    @GetMapping("/page")
+    public ResponseEntity<Page<Aluno>> findPage (Model model,
+                                                 @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                                 @RequestParam(value = "linesPerPage", defaultValue = "10") Integer linesPerPage,
+                                                 @RequestParam(value = "orderBy", defaultValue = "id") String orderBy,
+                                                 @RequestParam(value = "direction", defaultValue = "ASC") String direction) {
+        Page<Aluno> alunos = service.findPage(page, linesPerPage, orderBy, direction);
+        model.addAttribute("alunos", alunos);
+        return ResponseEntity.ok(alunos);
+
     }
 
     @GetMapping({"", "/"})
