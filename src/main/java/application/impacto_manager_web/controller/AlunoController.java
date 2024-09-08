@@ -5,6 +5,8 @@ import application.impacto_manager_web.model.Aluno;
 import application.impacto_manager_web.service.AlunoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -13,16 +15,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(name = "Alunos")
 @RestController
 @RequestMapping("/api/aluno")
-@Tag(name = "Alunos")
+@AllArgsConstructor
 public class AlunoController {
     private final AlunoService service;
     private final AlunoFaker alunoFaker;
 
-    public AlunoController(AlunoService service) {
-        this.service = service;
-    }
 
     @GetMapping({"", "/"})
     @Operation(summary = "Buscar alunos", description = "Busca todos os alunos", tags = "Alunos")
