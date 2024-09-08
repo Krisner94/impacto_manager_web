@@ -5,6 +5,8 @@ import application.impacto_manager_web.service.AlunoService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.ui.Model;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -29,6 +31,18 @@ public class AlunoController {
         return service.findById(id);
     }
 
+    @GetMapping("/page")
+    public ResponseEntity<Page<Aluno>> findPage (
+            Model model,
+            @RequestParam(value = "page", defaultValue = "0") Integer page,
+            @RequestParam(value = "linesPerPage", defaultValue = "10") Integer linesPerPage,
+            @RequestParam(value = "orderBy", defaultValue = "id") String orderBy,
+            @RequestParam(value = "direction", defaultValue = "ASC") String direction) {
+        Page<Aluno> alunos = service.findPage(page, linesPerPage, orderBy, direction);
+        model.addAttribute("alunos", alunos);
+        return ResponseEntity.ok(alunos);
+
+    }
     @PostMapping
     @Operation(summary = "Novo Aluno", description = "Criar novo aluno", tags = "Alunos")
     public ResponseEntity<Aluno> create(@RequestBody Aluno aluno) {

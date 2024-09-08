@@ -3,6 +3,10 @@ package application.impacto_manager_web.service;
 import application.impacto_manager_web.model.Aluno;
 import application.impacto_manager_web.repository.AlunoRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
@@ -45,6 +49,11 @@ public class AlunoService {
             p.setComplemento(aluno.getComplemento());
             return repository.save(p);
         }).orElseThrow();
+    }
+
+    public Page<Aluno> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+        Pageable pageable = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
+        return repository.findAll(pageable);
     }
 
     public void delete(Long id){
