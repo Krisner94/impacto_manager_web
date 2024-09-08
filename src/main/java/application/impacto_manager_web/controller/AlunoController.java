@@ -27,7 +27,7 @@ public class AlunoController {
 
     @GetMapping("/{id}")
     @Operation(summary = "Buscar alunos por id", description = "Busca aluno por id", tags = "Alunos")
-    public Aluno findById(@PathVariable Long id) {
+    public Aluno findById(@RequestHeader Long id) {
         return service.findById(id);
     }
 
@@ -59,7 +59,7 @@ public class AlunoController {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Exclui aluno", description = "Exclui dados de alunos", tags = "Alunos")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@RequestHeader Long id) {
         service.delete(id);
         return ResponseEntity.ok().build();
     }

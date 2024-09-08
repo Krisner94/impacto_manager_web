@@ -25,7 +25,7 @@ public class ProfessorController {
 
     @GetMapping("/{id}")
     @Operation(summary = "Buscar professores por id", description = "Busca professores por id", tags = "Professor")
-    public Professor findById(@PathVariable Long id){
+    public Professor findById(@RequestHeader Long id){
         return service.findById(id);
     }
 
