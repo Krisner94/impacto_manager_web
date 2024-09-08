@@ -55,6 +55,11 @@ public class AlunoService {
         }).orElseThrow();
     }
 
+    public Page<Aluno> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+        Pageable pageable = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
+        return repository.findAll(pageable);
+    }
+
     public void delete(Long id){
         repository.deleteById(id);
     }
