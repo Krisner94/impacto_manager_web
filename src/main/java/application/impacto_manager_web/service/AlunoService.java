@@ -26,6 +26,10 @@ public class AlunoService {
         return repository.findById(id).orElse(null);
     }
 
+    public List<Aluno> findByNomeOrCpf(String nome, String cpf){
+        return repository.findByNomeOrCpf(nome, cpf);
+    }
+
     public Aluno save(Aluno aluno){
         return repository.save(aluno);
     }

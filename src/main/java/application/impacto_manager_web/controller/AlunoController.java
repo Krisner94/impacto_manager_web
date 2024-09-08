@@ -6,8 +6,6 @@ import application.impacto_manager_web.service.AlunoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -34,6 +32,12 @@ public class AlunoController {
     @Operation(summary = "Buscar alunos por id")
     public Aluno findById(@PathVariable Long id) {
         return service.findById(id);
+    }
+
+    @GetMapping("/buscar")
+    @Operation(summary = "Buscar alunos por id")
+    public List<Aluno> findByNomeOuCPF(@RequestHeader(required = false) String nome, @RequestHeader(required = false) String cpf) {
+        return service.findByNomeOrCpf(nome, cpf);
     }
 
     @GetMapping("/page")
