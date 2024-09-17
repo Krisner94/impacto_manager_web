@@ -19,48 +19,76 @@ public class AlunoService {
     }
 
     public List<Aluno> findAll(){
-        return repository.findAll();
+        try {
+            return repository.findAll();
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao buscar todos os alunos", e);
+        }
     }
 
     public Aluno findById(Long id){
-        return repository.findById(id).orElse(null);
+        try {
+            return repository.findById(id).orElse(null);
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao buscar aluno por ID", e);
+        }
     }
 
     public List<Aluno> findByNomeOrCpf(String nome, String cpf){
-        return repository.findByNomeOrCpf(nome, cpf);
+        try {
+            return repository.findByNomeOrCpf(nome, cpf);
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao buscar aluno por nome ou CPF", e);
+        }
     }
 
     public Aluno save(Aluno aluno){
-        return repository.save(aluno);
+        try {
+            return repository.save(aluno);
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao salvar aluno", e);
+        }
     }
 
     public Aluno update(Long id, Aluno aluno){
-        return repository.findById(id).map(p -> {
-            p.setNome(aluno.getNome());
-            p.setCpf(aluno.getCpf());
-            p.setSexo(aluno.getSexo());
-            p.setDataNascimento(aluno.getDataNascimento());
-            p.setTelefone(aluno.getTelefone());
-            p.setCep(aluno.getCep());
-            p.setRua(aluno.getRua());
-            p.setBairro(aluno.getBairro());
-            p.setCidade(aluno.getCidade());
-            p.setNumeroCasa(aluno.getNumeroCasa());
-            p.setResponsavel01(aluno.getResponsavel01());
-            p.setTelefoneResponsavel01(aluno.getTelefoneResponsavel01());
-            p.setResponsavel02(aluno.getResponsavel02());
-            p.setTelefoneResponsavel02(aluno.getTelefoneResponsavel02());
-            p.setComplemento(aluno.getComplemento());
-            return repository.save(p);
-        }).orElseThrow();
+        try {
+            return repository.findById(id).map(p -> {
+                p.setNome(aluno.getNome());
+                p.setCpf(aluno.getCpf());
+                p.setSexo(aluno.getSexo());
+                p.setDataNascimento(aluno.getDataNascimento());
+                p.setTelefone(aluno.getTelefone());
+                p.setCep(aluno.getCep());
+                p.setRua(aluno.getRua());
+                p.setBairro(aluno.getBairro());
+                p.setCidade(aluno.getCidade());
+                p.setNumeroCasa(aluno.getNumeroCasa());
+                p.setResponsavel01(aluno.getResponsavel01());
+                p.setTelefoneResponsavel01(aluno.getTelefoneResponsavel01());
+                p.setResponsavel02(aluno.getResponsavel02());
+                p.setTelefoneResponsavel02(aluno.getTelefoneResponsavel02());
+                p.setComplemento(aluno.getComplemento());
+                return repository.save(p);
+            }).orElseThrow();
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao atualizar aluno", e);
+        }
     }
 
     public Page<Aluno> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
-        Pageable pageable = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
-        return repository.findAll(pageable);
+        try {
+            Pageable pageable = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
+            return repository.findAll(pageable);
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao buscar página de alunos", e);
+        }
     }
 
     public void delete(Long id){
-        repository.deleteById(id);
+        try {
+            repository.deleteById(id);
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao deletar aluno", e);
+        }
     }
 }
