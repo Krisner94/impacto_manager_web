@@ -35,7 +35,7 @@ public class AlunoController {
     }
 
     @GetMapping("/buscar")
-    @Operation(summary = "Buscar alunos por id")
+    @Operation(summary = "Filtragem de Alunos por nome ou cpf")
     public List<Aluno> findByNomeOuCPF(@RequestHeader(required = false) String nome, @RequestHeader(required = false) String cpf) {
         return service.findByNomeOrCpf(nome, cpf);
     }

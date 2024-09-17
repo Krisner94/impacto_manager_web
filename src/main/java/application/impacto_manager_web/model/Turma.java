@@ -1,6 +1,7 @@
 package application.impacto_manager_web.model;
 
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -16,6 +17,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonPropertyOrder({"id"})
 public class Turma implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;

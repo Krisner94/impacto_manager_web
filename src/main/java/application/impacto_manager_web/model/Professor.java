@@ -2,6 +2,7 @@ package application.impacto_manager_web.model;
 
 import application.impacto_manager_web.model.base.Pessoa;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,6 +18,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonPropertyOrder({"id"})
 public class Professor extends Pessoa implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
