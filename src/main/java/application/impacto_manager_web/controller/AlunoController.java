@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 @Tag(name = "Alunos")
 @RestController
@@ -24,7 +25,7 @@ public class AlunoController {
 
     @GetMapping({"", "/"})
     @Operation(summary = "Buscar alunos", description = "Busca todos os alunos", tags = "Alunos")
-    public List<Aluno> findAll() {
+    public List<Aluno> findAll() throws ExecutionException, InterruptedException {
         return service.findAll();
     }
 

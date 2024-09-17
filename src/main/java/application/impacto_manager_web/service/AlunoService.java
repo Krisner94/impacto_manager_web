@@ -2,6 +2,9 @@ package application.impacto_manager_web.service;
 
 import application.impacto_manager_web.model.Aluno;
 import application.impacto_manager_web.repository.AlunoRepository;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -9,21 +12,27 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
 
 @Service
+@RequiredArgsConstructor
 public class AlunoService {
+
     private final AlunoRepository repository;
+    private final ExecutorService executorService;
 
-    public AlunoService(AlunoRepository repository) {
-        this.repository = repository;
-    }
+    public List<Aluno> findAll() throws ExecutionException, InterruptedException {
+        CompletableFuture<List<Aluno>> future = CompletableFuture.supplyAsync(() -> {
+            try {
+                return repository.findAll();
+            } catch (Exception e) {
+                throw new RuntimeException("Erro ao buscar todos os alunos", e);
+            }
+        }, executorService);
 
-    public List<Aluno> findAll(){
-        try {
-            return repository.findAll();
-        } catch (Exception e) {
-            throw new RuntimeException("Erro ao buscar todos os alunos", e);
-        }
+        return future.get();
     }
 
     public Aluno findById(Long id){
