@@ -1,5 +1,6 @@
 package application.impacto_manager_web.model;
 
+import application.impacto_manager_web.model.base.Pessoa;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -16,7 +17,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Professor implements Serializable {
+public class Professor extends Pessoa implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -25,29 +26,7 @@ public class Professor implements Serializable {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(nullable = false)
-    private String nome;
-
-
     @ManyToMany(mappedBy = "professores")
     @JsonIgnore
     private List<Turma> turmas = new ArrayList<>();
-
-    public Professor(Long id, String nome) {
-        this.id = id;
-        this.nome = nome;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public List<Turma> getTurmas() {
-        return turmas;
-    }
-
 }

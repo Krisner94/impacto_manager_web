@@ -8,7 +8,7 @@ import java.util.List;
 
 @Service
 public class ProfessorService {
-    private ProfessorRepository repository;
+    private final ProfessorRepository repository;
 
     public ProfessorService(ProfessorRepository repository) {
         this.repository = repository;
@@ -29,6 +29,8 @@ public class ProfessorService {
     public Professor update(Long id, Professor professor){
         return repository.findById(id).map(p -> {
             p.setNome(professor.getNome());
+            p.setSexo(professor.getSexo());
+            p.setCpf(professor.getCpf());
             return repository.save(p);
         }).orElseThrow();
     }

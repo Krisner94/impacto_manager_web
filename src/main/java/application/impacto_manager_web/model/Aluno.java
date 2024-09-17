@@ -1,6 +1,7 @@
 package application.impacto_manager_web.model;
 
 import application.impacto_manager_web.enums.SexoEnum;
+import application.impacto_manager_web.model.base.Pessoa;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -18,18 +19,12 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Aluno implements Serializable {
+public class Aluno extends Pessoa implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false)
-    private String nome;
-    @Column(nullable = false)
-    private String cpf;
-    @Column(nullable = false)
-    private SexoEnum sexo;
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")

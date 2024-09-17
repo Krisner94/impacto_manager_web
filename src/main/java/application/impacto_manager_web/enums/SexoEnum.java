@@ -1,5 +1,9 @@
 package application.impacto_manager_web.enums;
 
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 public enum SexoEnum {
     MASCULINO("masculino"),
     FEMININO("feminino");

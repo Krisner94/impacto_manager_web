@@ -36,8 +36,6 @@ public class AlunoFaker extends Faker {
 
         Aluno alunoFake = Aluno.builder()
                 .id(null)
-                .nome(faker.name().fullName())
-                .cpf(cpf)
                 .dataNascimento(LocalDate.parse(dataNascimento))
                 .telefone(faker.phoneNumber().cellPhone().replaceAll("\\D", "").substring(0, 11))
                 .cep(faker.address().zipCode())
@@ -48,8 +46,11 @@ public class AlunoFaker extends Faker {
                 .responsavel02(faker.funnyName().name())
                 .telefoneResponsavel01(faker.phoneNumber().cellPhone().replaceAll("\\D", "").substring(0, 11))
                 .telefoneResponsavel02(faker.phoneNumber().cellPhone().replaceAll("\\D", "").substring(0, 11))
-                .sexo(sexo) // seta o sexo do aluno fake
                 .build();
+
+        alunoFake.setNome(faker.name().fullName());
+        alunoFake.setCpf(cpf);
+        alunoFake.setSexo(sexo);
 
         return alunoFake;
     }
