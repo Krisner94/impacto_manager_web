@@ -15,27 +15,47 @@ public class ProfessorService {
     }
 
     public List<Professor> findAll(){
-        return repository.findAll();
+        try {
+            return repository.findAll();
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao buscar todos os professores", e);
+        }
     }
 
     public Professor findById(Long id){
-        return repository.findById(id).orElse(null);
+        try {
+            return repository.findById(id).orElse(null);
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao buscar professor por ID", e);
+        }
     }
 
     public Professor save(Professor professor){
-        return repository.save(professor);
+        try {
+            return repository.save(professor);
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao salvar professor", e);
+        }
     }
 
     public Professor update(Long id, Professor professor){
-        return repository.findById(id).map(p -> {
-            p.setNome(professor.getNome());
-            p.setSexo(professor.getSexo());
-            p.setCpf(professor.getCpf());
-            return repository.save(p);
-        }).orElseThrow();
+        try {
+            return repository.findById(id).map(p -> {
+                p.setNome(professor.getNome());
+                p.setSexo(professor.getSexo());
+                p.setCpf(professor.getCpf());
+                return repository.save(p);
+            }).orElseThrow();
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao atualizar professor", e);
+        }
     }
 
     public void delete(Long id){
-        repository.deleteById(id);
+        try {
+            repository.deleteById(id);
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao deletar professor", e);
+        }
     }
 }

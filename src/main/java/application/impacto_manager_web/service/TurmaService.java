@@ -13,29 +13,49 @@ public class TurmaService {
     private final TurmaRepository repository;
 
     public List<Turma> findAll(){
-        return repository.findAll();
+        try {
+            return repository.findAll();
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao buscar todas as turmas", e);
+        }
     }
 
     public Turma findById(Long id){
-        return repository.findById(id).orElse(null);
+        try {
+            return repository.findById(id).orElse(null);
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao buscar turma por ID", e);
+        }
     }
 
     public Turma save(Turma turma){
-        return repository.save(turma);
+        try {
+            return repository.save(turma);
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao salvar turma", e);
+        }
     }
 
     public Turma update(Long id, Turma turma){
-        return repository.findById(id).map(t -> {
-            t.setNome(turma.getNome());
-            t.setDia01(turma.getDia01());
-            t.setDia02(turma.getDia02());
-            t.setHorario(turma.getHorario());
-            t.setAlunos(turma.getAlunos());
-            return repository.save(t);
-        }).orElseThrow();
+        try {
+            return repository.findById(id).map(t -> {
+                t.setNome(turma.getNome());
+                t.setDia01(turma.getDia01());
+                t.setDia02(turma.getDia02());
+                t.setHorario(turma.getHorario());
+                t.setAlunos(turma.getAlunos());
+                return repository.save(t);
+            }).orElseThrow();
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao atualizar turma", e);
+        }
     }
 
     public void delete(Long id){
-        repository.deleteById(id);
+        try {
+            repository.deleteById(id);
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao deletar turma", e);
+        }
     }
 }
