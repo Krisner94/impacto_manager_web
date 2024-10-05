@@ -34,12 +34,6 @@ public class AlunoController {
         return service.findById(id);
     }
 
-    @GetMapping("/buscar")
-    @Operation(summary = "Buscar alunos por id")
-    public List<Aluno> findByNomeOuCPF(@RequestHeader(required = false) String nome, @RequestHeader(required = false) String cpf) {
-        return service.findByNomeOrCpf(nome, cpf);
-    }
-
     @GetMapping("/page")
     public ResponseEntity<Page<Aluno>> findPage (
             Model model,
