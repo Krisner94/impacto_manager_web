@@ -1,5 +1,6 @@
 package application.impacto_manager_web.controller;
 
+import application.impacto_manager_web.exceptions.NotFoundException;
 import application.impacto_manager_web.model.Aluno;
 import application.impacto_manager_web.model.Turma;
 import application.impacto_manager_web.service.TurmaService;
@@ -41,7 +42,7 @@ public class TurmaController {
 
     @PutMapping("/{id}")
     @Operation(summary = "Atualiza os valores de uma turma existente")
-    public Turma update(@RequestBody Turma turma){
+    public Turma update(@RequestBody Turma turma) throws NotFoundException {
         Long id = turma.getId();
         return service.update(id, turma);
     }

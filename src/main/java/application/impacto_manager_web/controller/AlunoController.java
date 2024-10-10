@@ -1,14 +1,13 @@
 package application.impacto_manager_web.controller;
 
 import application.impacto_manager_web.AlunoFaker;
+import application.impacto_manager_web.exceptions.NotFoundException;
 import application.impacto_manager_web.model.Aluno;
 import application.impacto_manager_web.service.AlunoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,18 +33,6 @@ public class AlunoController {
         return service.findById(id);
     }
 
-    @GetMapping("/page")
-    public ResponseEntity<Page<Aluno>> findPage (
-            Model model,
-            @RequestParam(value = "page", defaultValue = "0") Integer page,
-            @RequestParam(value = "linesPerPage", defaultValue = "10") Integer linesPerPage,
-            @RequestParam(value = "orderBy", defaultValue = "id") String orderBy,
-            @RequestParam(value = "direction", defaultValue = "ASC") String direction) {
-        Page<Aluno> alunos = service.findPage(page, linesPerPage, orderBy, direction);
-        model.addAttribute("alunos", alunos);
-        return ResponseEntity.ok(alunos);
-
-    }
     @PostMapping
     @Operation(summary = "Novo Aluno")
     public ResponseEntity<Aluno> create(@RequestBody Aluno aluno) {
@@ -55,7 +42,7 @@ public class AlunoController {
 
     @PutMapping("/{id}")
     @Operation(summary = "Editar dados")
-    public Aluno update(@RequestBody Aluno aluno) {
+    public Aluno update(@RequestBody Aluno aluno) throws NotFoundException {
         Long id = aluno.getId();
         return service.update(id, aluno);
     }

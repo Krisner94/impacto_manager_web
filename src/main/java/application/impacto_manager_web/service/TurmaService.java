@@ -1,8 +1,10 @@
 package application.impacto_manager_web.service;
 
+import application.impacto_manager_web.exceptions.NotFoundException;
 import application.impacto_manager_web.model.Aluno;
 import application.impacto_manager_web.model.Turma;
 import application.impacto_manager_web.repository.TurmaRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -28,15 +30,13 @@ public class TurmaService {
         return repository.save(turma);
     }
 
-    public Turma update(Long id, Turma turma){
-        return repository.findById(id).map(t -> {
-            t.setNome(turma.getNome());
-            t.setDia01(turma.getDia01());
-            t.setDia02(turma.getDia02());
-            t.setHorario(turma.getHorario());
-            t.setAlunos(turma.getAlunos());
-            return repository.save(t);
-        }).orElseThrow();
+    public Turma update(Long id, Turma turma) throws NotFoundException {
+        return repository.findById(id)
+                .map(turmaExistente -> {
+                    BeanUtils.copyProperties(turma, turmaExistente, "id");
+                    return repository.save(turmaExistente);
+                })
+                .orElseThrow(() -> new NotFoundException(Turma.class, id));
     }
 
     public void delete(Long id){

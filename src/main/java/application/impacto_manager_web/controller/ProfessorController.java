@@ -1,5 +1,6 @@
 package application.impacto_manager_web.controller;
 
+import application.impacto_manager_web.exceptions.NotFoundException;
 import application.impacto_manager_web.model.Professor;
 import application.impacto_manager_web.service.ProfessorService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -40,7 +41,7 @@ public class ProfessorController {
 
     @PutMapping("/{id}")
     @Operation(summary = "Atualiza um professor")
-    public Professor update(@RequestBody Professor professor){
+    public Professor update(@RequestBody Professor professor) throws NotFoundException {
         Long id = professor.getId();
         return service.update(id, professor);
     }

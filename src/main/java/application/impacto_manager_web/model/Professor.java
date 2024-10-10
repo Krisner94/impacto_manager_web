@@ -33,21 +33,5 @@ public class Professor implements Serializable {
     @JsonIgnore
     private List<Turma> turmas = new ArrayList<>();
 
-    public Professor(Long id, String nome) {
-        this.id = id;
-        this.nome = nome;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public List<Turma> getTurmas() {
-        return turmas;
-    }
 
 }
