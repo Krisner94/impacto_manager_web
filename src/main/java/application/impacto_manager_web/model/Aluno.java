@@ -1,7 +1,6 @@
 package application.impacto_manager_web.model;
 
 import application.impacto_manager_web.enums.SexoEnum;
-import application.impacto_manager_web.model.base.Pessoa;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.persistence.*;
@@ -21,12 +20,17 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonPropertyOrder({"id"})
-public class Aluno extends Pessoa implements Serializable {
+public class Aluno implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false)
+    private String nome;
+    @Column(nullable = false, unique = true)
+    private String cpf;
+    private SexoEnum sexo;
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")

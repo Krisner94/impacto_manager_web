@@ -1,6 +1,5 @@
 package application.impacto_manager_web.model;
 
-import application.impacto_manager_web.model.base.Pessoa;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.persistence.*;
@@ -19,7 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonPropertyOrder({"id"})
-public class Professor extends Pessoa implements Serializable {
+public class Professor implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -27,6 +26,8 @@ public class Professor extends Pessoa implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
+    @Column(nullable = false)
+    private String nome;
 
     @ManyToMany(mappedBy = "professores")
     @JsonIgnore
