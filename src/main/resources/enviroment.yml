@@ -4,6 +4,7 @@ spring:
       allowed:
         origins:
           - http://localhost:4200
+          - http://localhost:3000/
           - https://meu-dominio.com
         methods:
           - GET

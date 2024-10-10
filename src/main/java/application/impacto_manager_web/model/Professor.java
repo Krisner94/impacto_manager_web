@@ -31,4 +31,6 @@ public class Professor extends Pessoa implements Serializable {
     @ManyToMany(mappedBy = "professores")
     @JsonIgnore
     private List<Turma> turmas = new ArrayList<>();
+
+
 }

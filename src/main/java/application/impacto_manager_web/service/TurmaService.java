@@ -1,10 +1,14 @@
 package application.impacto_manager_web.service;
 
+import application.impacto_manager_web.exceptions.NotFoundException;
+import application.impacto_manager_web.model.Aluno;
 import application.impacto_manager_web.model.Turma;
 import application.impacto_manager_web.repository.TurmaRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.List;
 
 @Service
@@ -12,50 +16,32 @@ import java.util.List;
 public class TurmaService {
     private final TurmaRepository repository;
 
+    public TurmaService(TurmaRepository repository) {
+        this.repository = repository;
+    }
+
     public List<Turma> findAll(){
-        try {
-            return repository.findAll();
-        } catch (Exception e) {
-            throw new RuntimeException("Erro ao buscar todas as turmas", e);
-        }
+        return repository.findAll();
     }
 
     public Turma findById(Long id){
-        try {
-            return repository.findById(id).orElse(null);
-        } catch (Exception e) {
-            throw new RuntimeException("Erro ao buscar turma por ID", e);
-        }
+        return repository.findById(id).orElse(null);
     }
 
     public Turma save(Turma turma){
-        try {
-            return repository.save(turma);
-        } catch (Exception e) {
-            throw new RuntimeException("Erro ao salvar turma", e);
-        }
+        return repository.save(turma);
     }
 
-    public Turma update(Long id, Turma turma){
-        try {
-            return repository.findById(id).map(t -> {
-                t.setNome(turma.getNome());
-                t.setDia01(turma.getDia01());
-                t.setDia02(turma.getDia02());
-                t.setHorario(turma.getHorario());
-                t.setAlunos(turma.getAlunos());
-                return repository.save(t);
-            }).orElseThrow();
-        } catch (Exception e) {
-            throw new RuntimeException("Erro ao atualizar turma", e);
-        }
+    public Turma update(Long id, Turma turma) throws NotFoundException {
+        return repository.findById(id)
+                .map(turmaExistente -> {
+                    BeanUtils.copyProperties(turma, turmaExistente, "id");
+                    return repository.save(turmaExistente);
+                })
+                .orElseThrow(() -> new NotFoundException(Turma.class, id));
     }
 
     public void delete(Long id){
-        try {
-            repository.deleteById(id);
-        } catch (Exception e) {
-            throw new RuntimeException("Erro ao deletar turma", e);
-        }
+        repository.deleteById(id);
     }
 }
