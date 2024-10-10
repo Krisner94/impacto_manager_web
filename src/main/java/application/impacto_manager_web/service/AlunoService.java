@@ -3,18 +3,16 @@ package application.impacto_manager_web.service;
 import application.impacto_manager_web.exceptions.NotFoundException;
 import application.impacto_manager_web.model.Aluno;
 import application.impacto_manager_web.repository.AlunoRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class AlunoService {
     private final AlunoRepository repository;
-
-    public AlunoService(AlunoRepository repository) {
-        this.repository = repository;
-    }
 
     public List<Aluno> findAll() {
         return repository.findAll();

@@ -1,23 +1,20 @@
 package application.impacto_manager_web.service;
 
 import application.impacto_manager_web.exceptions.NotFoundException;
-import application.impacto_manager_web.model.Aluno;
 import application.impacto_manager_web.model.Professor;
 import application.impacto_manager_web.repository.ProfessorRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ProfessorService {
-    private ProfessorRepository repository;
+    private final ProfessorRepository repository;
 
-    public ProfessorService(ProfessorRepository repository) {
-        this.repository = repository;
-    }
-
-    public List<Professor> findAll(){
+    public List<Professor> findAll() {
         try {
             return repository.findAll();
         } catch (Exception e) {
@@ -25,7 +22,7 @@ public class ProfessorService {
         }
     }
 
-    public Professor findById(Long id){
+    public Professor findById(Long id) {
         try {
             return repository.findById(id).orElse(null);
         } catch (Exception e) {
@@ -33,7 +30,7 @@ public class ProfessorService {
         }
     }
 
-    public Professor save(Professor professor){
+    public Professor save(Professor professor) {
         try {
             return repository.save(professor);
         } catch (Exception e) {
@@ -50,7 +47,7 @@ public class ProfessorService {
                 .orElseThrow(() -> new NotFoundException(Professor.class, id));
     }
 
-    public void delete(Long id){
+    public void delete(Long id) {
         try {
             repository.deleteById(id);
         } catch (Exception e) {
