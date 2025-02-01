@@ -1,0 +1,333 @@
+openapi: 3.0.0
+info:
+  title: Impacto Manager API
+  version: 1.0.0
+  description: API para gerenciamento de alunos, professores e turmas.
+
+paths:
+  /api/aluno:
+    get:
+      summary: Buscar alunos
+      description: Busca todos os alunos.
+      tags:
+        - Alunos
+      responses:
+        '200':
+          description: Lista de alunos retornada com sucesso.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Aluno'
+    post:
+      summary: Novo Aluno
+      description: Cria um novo aluno.
+      tags:
+        - Alunos
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Aluno'
+      responses:
+        '200':
+          description: Aluno criado com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Aluno'
+
+  /api/aluno/{id}:
+    get:
+      summary: Buscar aluno por ID
+      description: Busca um aluno pelo ID.
+      tags:
+        - Alunos
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Aluno encontrado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Aluno'
+    put:
+      summary: Editar dados do aluno
+      description: Atualiza os dados de um aluno existente.
+      tags:
+        - Alunos
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Aluno'
+      responses:
+        '200':
+          description: Aluno atualizado com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Aluno'
+    delete:
+      summary: Excluir aluno
+      description: Exclui um aluno pelo ID.
+      tags:
+        - Alunos
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Aluno excluído com sucesso.
+
+  /api/aluno/fake:
+    post:
+      summary: Adicionar alunos fake
+      description: Adiciona alunos fictícios ao banco de dados.
+      tags:
+        - Alunos
+      parameters:
+        - name: quantidade
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Alunos fake adicionados com sucesso.
+
+  /api/professor:
+    get:
+      summary: Buscar todos os professores
+      description: Retorna todos os professores existentes.
+      tags:
+        - Professor
+      responses:
+        '200':
+          description: Lista de professores retornada com sucesso.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Professor'
+    post:
+      summary: Adicionar professor
+      description: Cria um novo professor.
+      tags:
+        - Professor
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Professor'
+      responses:
+        '200':
+          description: Professor criado com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Professor'
+
+  /api/professor/{id}:
+    get:
+      summary: Buscar professor por ID
+      description: Busca um professor pelo ID.
+      tags:
+        - Professor
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Professor encontrado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Professor'
+    put:
+      summary: Atualizar professor
+      description: Atualiza os dados de um professor existente.
+      tags:
+        - Professor
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Professor'
+      responses:
+        '200':
+          description: Professor atualizado com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Professor'
+    delete:
+      summary: Excluir professor
+      description: Exclui um professor pelo ID.
+      tags:
+        - Professor
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Professor excluído com sucesso.
+
+  /api/turma:
+    get:
+      summary: Buscar todas as turmas
+      description: Retorna todas as turmas existentes.
+      tags:
+        - Turmas
+      responses:
+        '200':
+          description: Lista de turmas retornada com sucesso.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Turma'
+    post:
+      summary: Criar nova turma
+      description: Cria uma nova turma.
+      tags:
+        - Turmas
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Turma'
+      responses:
+        '200':
+          description: Turma criada com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Turma'
+
+  /api/turma/{id}:
+    get:
+      summary: Buscar turma por ID
+      description: Retorna uma turma específica pelo ID.
+      tags:
+        - Turmas
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Turma encontrada.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Turma'
+    put:
+      summary: Atualizar turma
+      description: Atualiza os dados de uma turma existente.
+      tags:
+        - Turmas
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Turma'
+      responses:
+        '200':
+          description: Turma atualizada com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Turma'
+    delete:
+      summary: Excluir turma
+      description: Exclui uma turma pelo ID.
+      tags:
+        - Turmas
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Turma excluída com sucesso.
+
+components:
+  schemas:
+    Aluno:
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+      required:
+        - id
+        - nome
+
+    Professor:
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+      required:
+        - id
+        - nome
+
+    Turma:
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+      required:
+        - id
+        - nome
