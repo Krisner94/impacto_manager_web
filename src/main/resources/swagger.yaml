@@ -5,7 +5,7 @@ info:
   description: API para gerenciamento de alunos, professores e turmas.
 
 paths:
-  /api/aluno:
+  /aluno:
     get:
       summary: Buscar alunos
       description: Busca todos os alunos.
@@ -39,7 +39,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Aluno'
 
-  /api/aluno/{id}:
+  /aluno/{id}:
     get:
       summary: Buscar aluno por ID
       description: Busca um aluno pelo ID.
@@ -97,7 +97,7 @@ paths:
         '200':
           description: Aluno excluído com sucesso.
 
-  /api/aluno/fake:
+  /aluno/fake:
     post:
       summary: Adicionar alunos fake
       description: Adiciona alunos fictícios ao banco de dados.
@@ -113,7 +113,7 @@ paths:
         '200':
           description: Alunos fake adicionados com sucesso.
 
-  /api/professor:
+  /professor:
     get:
       summary: Buscar todos os professores
       description: Retorna todos os professores existentes.
@@ -147,7 +147,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Professor'
 
-  /api/professor/{id}:
+  /professor/{id}:
     get:
       summary: Buscar professor por ID
       description: Busca um professor pelo ID.
@@ -205,7 +205,7 @@ paths:
         '200':
           description: Professor excluído com sucesso.
 
-  /api/turma:
+  /turma:
     get:
       summary: Buscar todas as turmas
       description: Retorna todas as turmas existentes.
@@ -239,7 +239,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Turma'
 
-  /api/turma/{id}:
+  /turma/{id}:
     get:
       summary: Buscar turma por ID
       description: Retorna uma turma específica pelo ID.
