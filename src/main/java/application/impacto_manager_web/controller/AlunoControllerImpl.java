@@ -18,8 +18,8 @@ import static application.impacto_manager_web.utils.ResponseEntityUtils.objectRe
 
 @Tag(name = "Alunos")
 @RestController
-@RequestMapping("/api")
 @AllArgsConstructor
+@RequestMapping("/api")
 public class AlunoControllerImpl implements AlunosApi {
     private final AlunoRepository repository;
     private final AlunoRepository alunoRepository;
@@ -58,3 +58,4 @@ public class AlunoControllerImpl implements AlunosApi {
         return ResponseEntity.ok().build();
     }
 }
+
