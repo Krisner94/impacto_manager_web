@@ -1,301 +1,492 @@
 openapi: 3.0.0
 info:
-  title: Impacto Manager API
-  version: 1.0.0
-  description: API para gerenciamento de alunos, professores e turmas.
+  title: Impacto Manager
+  description: Sistema de gerenciamento de escola de esportes
+  version: v1
+servers:
+  - url: http://localhost:8080
+    description: Generated server url
 
 paths:
-  /aluno:
+  /turma/{id}:
     get:
-      summary: Buscar alunos
-      description: Busca todos os alunos.
       tags:
-        - Alunos
-      responses:
-        '200':
-          description: Lista de alunos retornada com sucesso.
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Aluno'
-    post:
-      summary: Novo Aluno
-      description: Cria um novo aluno.
-      tags:
-        - Alunos
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Aluno'
-      responses:
-        '200':
-          description: Aluno criado com sucesso.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Aluno'
-
-  /aluno/{id}:
-    get:
-      summary: Buscar aluno por ID
-      description: Busca um aluno pelo ID.
-      tags:
-        - Alunos
+        - Turmas
+      summary: Retorna uma turma específica
+      operationId: getTurmaById
       parameters:
         - name: id
           in: path
           required: true
           schema:
             type: integer
+            format: int64
       responses:
         '200':
-          description: Aluno encontrado.
+          description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Aluno'
+                $ref: '#/components/schemas/Turma'
+        '400':
+          description: Requisição inválida.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Turma não encontrada.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Erro interno do servidor.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
     put:
-      summary: Editar dados do aluno
-      description: Atualiza os dados de um aluno existente.
       tags:
-        - Alunos
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
+        - Turmas
+      summary: Atualiza os valores de uma turma existente
+      operationId: updateTurma
       requestBody:
-        required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Aluno'
+              $ref: '#/components/schemas/Turma'
+        required: true
       responses:
         '200':
-          description: Aluno atualizado com sucesso.
+          description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Aluno'
+                $ref: '#/components/schemas/Turma'
+        '400':
+          description: Requisição inválida.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Turma não encontrada.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Erro interno do servidor.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
     delete:
-      summary: Excluir aluno
-      description: Exclui um aluno pelo ID.
       tags:
-        - Alunos
+        - Turmas
+      summary: Exclui uma turma existente
+      operationId: deleteTurma
       parameters:
         - name: id
           in: path
           required: true
           schema:
             type: integer
+            format: int64
       responses:
         '200':
-          description: Aluno excluído com sucesso.
-
-  /aluno/fake:
-    post:
-      summary: Adicionar alunos fake
-      description: Adiciona alunos fictícios ao banco de dados.
-      tags:
-        - Alunos
-      parameters:
-        - name: quantidade
-          in: query
-          required: true
-          schema:
-            type: integer
-      responses:
-        '200':
-          description: Alunos fake adicionados com sucesso.
-
-  /professor:
-    get:
-      summary: Buscar todos os professores
-      description: Retorna todos os professores existentes.
-      tags:
-        - Professor
-      responses:
-        '200':
-          description: Lista de professores retornada com sucesso.
+          description: OK
+        '400':
+          description: Requisição inválida.
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Professor'
-    post:
-      summary: Adicionar professor
-      description: Cria um novo professor.
-      tags:
-        - Professor
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Professor'
-      responses:
-        '200':
-          description: Professor criado com sucesso.
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Turma não encontrada.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Professor'
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Erro interno do servidor.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
   /professor/{id}:
     get:
-      summary: Buscar professor por ID
-      description: Busca um professor pelo ID.
       tags:
         - Professor
+      summary: Busca um professor específico
+      operationId: getProfessorById
       parameters:
         - name: id
           in: path
           required: true
           schema:
             type: integer
+            format: int64
       responses:
         '200':
-          description: Professor encontrado.
+          description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Professor'
+        '400':
+          description: Requisição inválida.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Professor não encontrado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Erro interno do servidor.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
     put:
-      summary: Atualizar professor
-      description: Atualiza os dados de um professor existente.
       tags:
         - Professor
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
+      summary: Atualiza um professor
+      operationId: updateProfessor
       requestBody:
-        required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/Professor'
+        required: true
       responses:
         '200':
-          description: Professor atualizado com sucesso.
+          description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Professor'
+        '400':
+          description: Requisição inválida.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Professor não encontrado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Erro interno do servidor.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
     delete:
-      summary: Excluir professor
-      description: Exclui um professor pelo ID.
       tags:
         - Professor
+      summary: Excluir professor
+      operationId: deleteProfessor
       parameters:
         - name: id
           in: path
           required: true
           schema:
             type: integer
+            format: int64
       responses:
         '200':
-          description: Professor excluído com sucesso.
+          description: OK
+        '400':
+          description: Requisição inválida.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Professor não encontrado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Erro interno do servidor.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /aluno/{id}:
+    get:
+      tags:
+        - Alunos
+      summary: Buscar alunos por id
+      operationId: getAlunoById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Aluno'
+        '400':
+          description: Requisição inválida.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Aluno não encontrado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Erro interno do servidor.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    put:
+      tags:
+        - Alunos
+      summary: Editar dados
+      operationId: updateAluno
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Aluno'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Aluno'
+        '400':
+          description: Requisição inválida.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Aluno não encontrado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Erro interno do servidor.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      tags:
+        - Alunos
+      summary: Exclui aluno
+      operationId: deleteAluno
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Requisição inválida.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Aluno não encontrado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Erro interno do servidor.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
   /turma:
     get:
-      summary: Buscar todas as turmas
-      description: Retorna todas as turmas existentes.
       tags:
         - Turmas
+      summary: Retorna todas as turmas
+      operationId: getAllTurmas
       responses:
         '200':
-          description: Lista de turmas retornada com sucesso.
+          description: OK
           content:
             application/json:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/Turma'
+        '500':
+          description: Erro interno do servidor.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
     post:
-      summary: Criar nova turma
-      description: Cria uma nova turma.
       tags:
         - Turmas
+      summary: Cria uma nova turma
+      operationId: createTurma
       requestBody:
-        required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/Turma'
+        required: true
       responses:
         '200':
-          description: Turma criada com sucesso.
+          description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Turma'
+        '400':
+          description: Requisição inválida.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Erro interno do servidor.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
-  /turma/{id}:
+  /professor:
     get:
-      summary: Buscar turma por ID
-      description: Retorna uma turma específica pelo ID.
       tags:
-        - Turmas
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
+        - Professor
+      summary: Busca todos os professores existentes
+      operationId: getAllProfessores
       responses:
         '200':
-          description: Turma encontrada.
+          description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Turma'
-    put:
-      summary: Atualizar turma
-      description: Atualiza os dados de uma turma existente.
+                type: array
+                items:
+                  $ref: '#/components/schemas/Professor'
+        '500':
+          description: Erro interno do servidor.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
       tags:
-        - Turmas
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
+        - Professor
+      summary: Adiciona um professor
+      operationId: createProfessor
       requestBody:
-        required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Turma'
+              $ref: '#/components/schemas/Professor'
+        required: true
       responses:
         '200':
-          description: Turma atualizada com sucesso.
+          description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Turma'
-    delete:
-      summary: Excluir turma
-      description: Exclui uma turma pelo ID.
+                $ref: '#/components/schemas/Professor'
+        '400':
+          description: Requisição inválida.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Erro interno do servidor.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /aluno:
+    get:
       tags:
-        - Turmas
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
+        - Alunos
+      summary: Buscar alunos
+      operationId: getAllAlunos
       responses:
         '200':
-          description: Turma excluída com sucesso.
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Aluno'
+        '500':
+          description: Erro interno do servidor.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      tags:
+        - Alunos
+      summary: Novo Aluno
+      operationId: createAluno
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Aluno'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Aluno'
+        '400':
+          description: Requisição inválida.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Erro interno do servidor.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
 components:
   schemas:
@@ -304,30 +495,107 @@ components:
       properties:
         id:
           type: integer
+          format: int64
         nome:
           type: string
-      required:
-        - id
-        - nome
+        cpf:
+          type: string
+        sexo:
+          type: string
+          enum:
+            - MASCULINO
+            - FEMININO
+        dataNascimento:
+          type: string
+          format: date
+        telefone:
+          type: string
+        endereco:
+          $ref: "#/components/schemas/Endereco"
+        responsavel:
+          type: array
+          items:
+            $ref: '#/components/schemas/Responsavel'
+
+
+    Responsavel:
+      type: array
+      properties:
+        nome:
+          type: string
+        telefone:
+          type: string
+          example:
+            - nome: "Maria Silva"
+              telefone: "11987654321"
+            - nome: "José Silva"
+              telefone: "11912345678"
+
+    Endereco:
+      type: object
+      properties:
+        cep:
+          type: string
+        rua:
+          type: string
+        bairro:
+          type: string
+        cidade:
+          type: string
+        numeroCasa:
+          type: string
+        complemento:
+          type: string
 
     Professor:
       type: object
       properties:
         id:
           type: integer
+          format: int64
         nome:
           type: string
-      required:
-        - id
-        - nome
 
     Turma:
       type: object
       properties:
         id:
           type: integer
+          format: int64
         nome:
           type: string
-      required:
-        - id
-        - nome
+        dia01:
+          type: string
+        dia02:
+          type: string
+        horario:
+          type: string
+        alunos:
+          type: array
+          items:
+            $ref: '#/components/schemas/Aluno'
+        professores:
+          type: array
+          items:
+            $ref: '#/components/schemas/Professor'
+
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+          description: Código de status HTTP.
+          example: 400
+        message:
+          type: string
+          description: Mensagem de erro descritiva.
+          example: "Dados inválidos fornecidos"
+        timestamp:
+          type: string
+          format: date-time
+          description: Data e hora em que o erro ocorreu.
+          example: "2023-10-25T14:30:00Z"
+        path:
+          type: string
+          description: Caminho da requisição que causou o erro.
+          example: "/aluno"
