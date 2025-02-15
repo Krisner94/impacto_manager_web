@@ -12,8 +12,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "turma")
-@Getter
-@Setter
+@Data
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor

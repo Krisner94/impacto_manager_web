@@ -14,8 +14,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "aluno")
-@Getter
-@Setter
+@Data
+@EqualsAndHashCode(callSuper = false)
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -25,7 +25,7 @@ public class Aluno implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id;
+    private Integer id;
     @Column(nullable = false)
     private String nome;
     @Column(nullable = false, unique = true)
