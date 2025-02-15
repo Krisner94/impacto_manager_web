@@ -103,9 +103,14 @@
             <version>2.2.15</version>
         </dependency>
         <dependency>
-            <groupId>io.swagger</groupId>
-            <artifactId>swagger-annotations</artifactId>
-            <version>1.6.15</version>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+            <version>1.5.5.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct-processor</artifactId>
+            <version>1.5.5.Final</version>
         </dependency>
     </dependencies>
 
@@ -134,13 +139,16 @@
                                 <dateLibrary>java8</dateLibrary>
                                 <useSpringBoot3>true</useSpringBoot3>
                                 <apiPackage>application.controller</apiPackage>
-                                <modelPackage>application.model</modelPackage>
+                                <modelPackage>application.impacto_manager_web.model</modelPackage>
                                 <java8>true</java8>
-<!--                                <async>false</async>-->
                                 <interfaceOnly>true</interfaceOnly>
                                 <jakarta>true</jakarta>
                                 <returnResponse>false</returnResponse>
                             </configOptions>
+                            <generateApis>true</generateApis>
+                            <generateModels>true</generateModels>
+                            <generateModelDocumentation>true</generateModelDocumentation>
+                            <modelNameSuffix>Generated</modelNameSuffix>
                         </configuration>
                     </execution>
                 </executions>
