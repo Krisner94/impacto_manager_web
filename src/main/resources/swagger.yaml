@@ -525,11 +525,6 @@ components:
           type: string
         telefone:
           type: string
-          example:
-            - nome: "Maria Silva"
-              telefone: "11987654321"
-            - nome: "José Silva"
-              telefone: "11912345678"
 
     Endereco:
       type: object
