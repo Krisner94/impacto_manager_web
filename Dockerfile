@@ -1,6 +1,6 @@
 FROM maven:3.8.5-openjdk-17 AS build
 COPY . .
-RUN mvn clean install
+RUN mvn clean generate-sources
 RUN mvn clean package -DskipTest
 
 FROM maven:3.8.1-openjdk-17-slim
