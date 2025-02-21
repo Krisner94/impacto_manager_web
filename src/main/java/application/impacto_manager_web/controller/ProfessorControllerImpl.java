@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 import static application.impacto_manager_web.exceptions.ExceptionBuildMessage.errorBuildMessage;
+import static application.impacto_manager_web.utils.ResponseEntityUtils.created;
 
 @RestController
 @RequestMapping("/api")
@@ -27,8 +28,7 @@ public class ProfessorControllerImpl implements ProfessorApi {
 
     @Override
     public ResponseEntity<ProfessorGenerated> createProfessor(ProfessorGenerated body) {
-        ProfessorGenerated savedProfessorGenerated = ProfessorMapper.INSTANCE.toProfessorGenerated(Professor.builder().build());
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedProfessorGenerated);
+        return created(ProfessorMapper.INSTANCE.toProfessorGenerated(new Professor()));
     }
 
     @Override
@@ -39,8 +39,7 @@ public class ProfessorControllerImpl implements ProfessorApi {
 
     @Override
     public ResponseEntity<List<ProfessorGenerated>> getAllProfessores() {
-        List<ProfessorGenerated> professorGeneratedList = ProfessorMapper.INSTANCE.toProfessorGeneratedList(repository.findAll());
-        return ResponseEntity.ok(professorGeneratedList);
+        return ResponseEntity.ok(ProfessorMapper.INSTANCE.toProfessorGeneratedList(repository.findAll()));
     }
 
     @Override
@@ -50,8 +49,7 @@ public class ProfessorControllerImpl implements ProfessorApi {
                 new CustomException(Professor.class).addError(errorBuildMessage(Professor.class, id))
             );
 
-        ProfessorGenerated professorGenerated = ProfessorMapper.INSTANCE.toProfessorGenerated(professor);
-        return ResponseEntity.ok(professorGenerated);
+        return ResponseEntity.ok(ProfessorMapper.INSTANCE.toProfessorGenerated(professor));
     }
 
     @Override
