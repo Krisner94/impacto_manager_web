@@ -10,4 +10,12 @@ public class ExceptionBuildMessage {
             .httpStatus(String.valueOf(HttpStatus.NOT_FOUND.value()))
             .build();
     }
+
+    public static Error errorBuildMessage(Long id) {
+        return Error.builder()
+            .title("Id não encontrado")
+            .message("Não existe objeto no sistema com id " + id)
+            .httpStatus(String.valueOf(HttpStatus.NOT_FOUND.value()))
+            .build();
+    }
 }
