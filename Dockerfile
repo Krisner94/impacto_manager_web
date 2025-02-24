@@ -4,7 +4,7 @@ WORKDIR /app
 RUN mvn clean generate-sources
 RUN mvn clean package -DskipTests
 
-FROM openjdk:17-jdk-slim
+FROM openjdk:21-jdk-slim
 COPY --from=build /app/target/impacto_manager_web-0.0.1-alpha.jar impacto-manager.jar
 EXPOSE 8080
 
