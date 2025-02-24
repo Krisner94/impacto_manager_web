@@ -5,13 +5,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.util.List;
-
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(CustomException.class)
-    public static ResponseEntity<List<Error>> handleCustomException(CustomException ex) {
-        return new ResponseEntity<>(ex.getErrors(), HttpStatus.BAD_REQUEST);
+    public ResponseEntity<Error> handleCustomException(CustomException ex) {
+        return ex.getErrors().getFirst().getHttpStatus().equals(String.valueOf(HttpStatus.NOT_FOUND.value())) ?
+            ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getErrors().getFirst()) :
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getErrors().getFirst());
     }
 }

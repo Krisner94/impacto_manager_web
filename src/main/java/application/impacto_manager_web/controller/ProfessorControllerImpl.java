@@ -9,15 +9,15 @@ import application.impacto_manager_web.repository.ProfessorRepository;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 import static application.impacto_manager_web.exceptions.ExceptionBuildMessage.errorBuildMessage;
-import static application.impacto_manager_web.utils.ResponseEntityUtils.created;
+import static application.impacto_manager_web.utils.ResponseEntityUtils.*;
 
 @RestController
 @RequestMapping("/api")
@@ -28,28 +28,24 @@ public class ProfessorControllerImpl implements ProfessorApi {
 
     @Override
     public ResponseEntity<ProfessorGenerated> createProfessor(ProfessorGenerated body) {
-        return created(ProfessorMapper.INSTANCE.toProfessorGenerated(new Professor()));
+        Professor professor = new Professor();
+        BeanUtils.copyProperties(body, professor);
+        return created(ProfessorMapper.INSTANCE.toProfessorGenerated(professor), professor, repository);
     }
 
     @Override
     public ResponseEntity<Void> deleteProfessor(Long id) {
-        repository.deleteById(id);
-        return ResponseEntity.noContent().build();
+        return delete(repository,Professor.class, id);
     }
 
     @Override
     public ResponseEntity<List<ProfessorGenerated>> getAllProfessores() {
-        return ResponseEntity.ok(ProfessorMapper.INSTANCE.toProfessorGeneratedList(repository.findAll()));
+        return ok(ProfessorMapper.INSTANCE.toProfessorGeneratedList(repository.findAll()));
     }
 
     @Override
     public ResponseEntity<ProfessorGenerated> getProfessorById(Long id) {
-        Professor professor = repository.findById(id)
-            .orElseThrow(() ->
-                new CustomException(Professor.class).addError(errorBuildMessage(Professor.class, id))
-            );
-
-        return ResponseEntity.ok(ProfessorMapper.INSTANCE.toProfessorGenerated(professor));
+        return ok(ProfessorMapper.INSTANCE.toProfessorGenerated(repository.findById(id).orElse(null)), id);
     }
 
     @Override
@@ -62,6 +58,6 @@ public class ProfessorControllerImpl implements ProfessorApi {
         BeanUtils.copyProperties(body, professor, "id");
         Professor updatedProfessor = repository.save(professor);
         ProfessorGenerated updatedProfessorGenerated = ProfessorMapper.INSTANCE.toProfessorGenerated(updatedProfessor);
-        return ResponseEntity.ok(updatedProfessorGenerated);
+        return ok(updatedProfessorGenerated);
     }
 }

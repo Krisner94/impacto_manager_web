@@ -9,6 +9,7 @@ import application.impacto_manager_web.repository.TurmaRepository;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,24 +33,19 @@ public class TurmaControllerImpl implements TurmasApi {
 
     @Override
     public ResponseEntity<TurmaGenerated> getTurmaById(Long id) {
-        Turma turma = repository.findById(id).orElseThrow(() ->
-            new CustomException(Turma.class).addError(errorBuildMessage(Turma.class, id)));
-
-        return ok(TurmaMapper.INSTANCE.toTurmaGenerated(turma));
+        return ok(TurmaMapper.INSTANCE.toTurmaGenerated(repository.findById(id).orElse(null)), id);
     }
 
     @Override
     public ResponseEntity<TurmaGenerated> createTurma(TurmaGenerated body) {
-        Turma turma = Turma.builder().build();
+        Turma turma = new Turma();
         BeanUtils.copyProperties(body, turma);
-        repository.save(turma);
-        return created(TurmaMapper.INSTANCE.toTurmaGenerated(turma));
+        return created(TurmaMapper.INSTANCE.toTurmaGenerated(turma), new Turma(), repository);
     }
 
     @Override
     public ResponseEntity<Void> deleteTurma(Long id) {
-        repository.deleteById(id);
-        return noContent(id);
+        return delete(repository, Turma.class, id);
     }
 
 

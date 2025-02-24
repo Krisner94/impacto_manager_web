@@ -16,6 +16,10 @@ public class CustomException extends RuntimeException {
         super("Erro na classe " + clazz.getSimpleName());
     }
 
+    public CustomException(String error, ReflectiveOperationException e) {
+        super(error, e);
+    }
+
     public void addErrors(List<Error> errors) {
         this.errors.addAll(errors);
     }
@@ -23,6 +27,10 @@ public class CustomException extends RuntimeException {
     public CustomException addError(Error error) {
         this.errors.add(error);
         return this;
+    }
+
+    public CustomException(String mesage){
+        super(mesage);
     }
 
 }

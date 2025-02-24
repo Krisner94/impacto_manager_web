@@ -2,6 +2,8 @@ package application.impacto_manager_web.exceptions;
 
 import org.springframework.http.HttpStatus;
 
+import java.lang.reflect.Method;
+
 public class ExceptionBuildMessage {
     public static Error errorBuildMessage(Class<?> clazz, Long id) {
         return Error.builder()

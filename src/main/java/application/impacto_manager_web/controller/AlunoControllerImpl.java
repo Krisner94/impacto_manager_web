@@ -10,16 +10,17 @@ import application.impacto_manager_web.repository.AlunoRepository;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static application.impacto_manager_web.exceptions.ExceptionBuildMessage.errorBuildMessage;
-import static application.impacto_manager_web.utils.ResponseEntityUtils.responseEntity;
+import static application.impacto_manager_web.utils.ResponseEntityUtils.*;
 
 @Tag(name = "Alunos")
 @RestController
@@ -32,33 +33,27 @@ public class AlunoControllerImpl implements AlunosApi {
 
     @Override
     public ResponseEntity<List<AlunoGenerated>> getAllAlunos() {
-        List<AlunoGenerated> alunosGenerated = AlunoMapper.INSTANCE.toAlunoGeneratedList(repository.findAll());
-        return responseEntity(alunosGenerated);
+        return ok(AlunoMapper.INSTANCE.toAlunoGeneratedList(repository.findAll()));
     }
 
     @Override
     public ResponseEntity<AlunoGenerated> createAluno(AlunoGenerated body) {
-        AlunoGenerated novoAluno = AlunoMapper.INSTANCE.toAlunoGenerated(Aluno.builder().build());
-        return responseEntity(novoAluno);
+        Aluno aluno = new Aluno();
+        BeanUtils.copyProperties(body, aluno);
+        return created(AlunoMapper.INSTANCE.toAlunoGenerated(aluno), aluno, repository);
     }
 
     @Override
     public ResponseEntity<Void> deleteAluno(Long id) {
-        repository.deleteById(id);
-        return ResponseEntity.noContent().build();
+        return delete(repository, Aluno.class, id);
     }
 
     @Override
-    public ResponseEntity<AlunoGenerated> getAlunoById(Long id){
-        errors.add(Error.builder()
-            .title("Professor não encontrado")
-            .message("O professor com o ID " + id + " não foi encontrado.")
-            .httpStatus(HttpStatus.NOT_FOUND.name())
-            .build());
-        Aluno aluno = repository.findById(id).orElseThrow(() ->
-            new CustomException(Aluno.class).addError(errorBuildMessage(Aluno.class, id)));
-        AlunoGenerated alunoGenerated = AlunoMapper.INSTANCE.toAlunoGenerated(aluno);
-        return responseEntity(alunoGenerated);
+    public ResponseEntity<AlunoGenerated> getAlunoById(Long id) {
+        Optional<Aluno> aluno = repository.findById(id);
+        AlunoGenerated alunoGenerated = AlunoMapper.INSTANCE.toAlunoGenerated(aluno.orElse(null));
+
+        return ok(alunoGenerated, id);
     }
 
     @Override
@@ -69,7 +64,7 @@ public class AlunoControllerImpl implements AlunosApi {
         BeanUtils.copyProperties(body, aluno, "id");
         Aluno updateAluno = repository.save(aluno);
         AlunoGenerated updateAlunoGenerated = AlunoMapper.INSTANCE.toAlunoGenerated(updateAluno);
-        return responseEntity(updateAlunoGenerated);
+        return ok(updateAlunoGenerated);
     }
 }
 

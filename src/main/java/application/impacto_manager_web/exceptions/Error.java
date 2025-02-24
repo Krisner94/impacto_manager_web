@@ -9,5 +9,4 @@ public class Error {
     private String title;
     private String message;
     private String httpStatus;
-
 }
